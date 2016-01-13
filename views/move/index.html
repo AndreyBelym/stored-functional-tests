@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="http://code.jquery.com/jquery-latest.min.js"
+            type="text/javascript"></script>
+    <title>Title</title>
+    <style>
+        #container {
+            position: relative;
+            width: 100px;
+            height: 50px;
+            top: 225px;
+            left: 50px;
+            border: 1px solid black;
+            overflow: auto;
+        }
+
+        .target {
+            position: relative;
+            width: 5px;
+            height: 5px;
+            background-color: red;
+        }
+
+        .target:hover {
+            background-color: green;
+        }
+
+        #iframe1 {
+            position: relative;
+            width: 200px;
+            height: 100px;
+            top: 250px;
+            left: 50px;
+        }
+
+        #iframe2 {
+            position: relative;
+            width: 200px;
+            height: 100px;
+            top: 250px;
+            left: 150px;
+        }
+
+        #iframe3 {
+            position: relative;
+            width: 200px;
+            height: 100px;
+            top: 650px;
+            left: 1050px;
+        }
+    </style>
+</head>
+<body style="height: 1500px; width: 3000px;">
+<div id="container">
+    <div id="point1" class="target" style="top: 5px; left: 150px;"></div>
+</div>
+<div id="point2" class="target" style="top: 50px; left: 50px;"></div>
+
+<iframe id="iframe1" src="/move/iframe.html"></iframe>
+<iframe id="iframe2" src="/move/iframe.html"></iframe>
+
+<iframe id="iframe3" src="/move/iframe.html"></iframe>
+</body>
+</html>
