@@ -1,6 +1,8 @@
 "@fixture move";
 "@page http://localhost:3002/move/index.html";
 
+var shadowUI = window['%hammerhead%'].shadowUI;
+
 var userAgent = navigator.userAgent.toLowerCase();
 var isIE11    = !!(navigator.appCodeName === 'Mozilla' && /Trident\/7.0/i.test(userAgent));
 var isMSEdge  = !!(/Edge\//.test(userAgent));
@@ -18,6 +20,14 @@ function bindHandlers () {
         events.push(id + '-' + type);
         e.stopPropagation();
     });
+}
+
+function getCursorUIElement () {
+    return shadowUI.select('.cursor')[0];
+}
+
+function getIntValue (strValue) {
+    return parseInt(strValue.replace('px', ''));
 }
 
 "@test"["Move to the element in the scrolled container"] = {
@@ -143,7 +153,14 @@ function bindHandlers () {
         events = [];
     },
 
-    "5.Check event in iframe": inIFrame('#iframe1', function () {
+    '5.Check cursor position': function () {
+        var cursorElement = getCursorUIElement();
+
+        eq(getIntValue(cursorElement.style.left), isIE ? 74 : 73);
+        eq(getIntValue(cursorElement.style.top), isIE ? 323 : 322);
+    },
+
+    "6.Check event in iframe": inIFrame('#iframe1', function () {
         var expectedEvents = [];
 
         if (isIE) {
@@ -171,19 +188,26 @@ function bindHandlers () {
         events = [];
     }),
 
-    "6.Move inside iframe": inIFrame('#iframe1', function () {
+    "7.Move inside iframe": inIFrame('#iframe1', function () {
         act.hover('#point', {
             offsetX: 0,
             offsetY: 0
         });
     }),
 
-    "7.Check events in top document": function () {
+    "8.Check events in top document": function () {
         eq(events, []);
         events = [];
     },
 
-    "8.Check event in iframe": inIFrame('#iframe1', function () {
+    '9.Check cursor position': function () {
+        var cursorElement = getCursorUIElement();
+
+        eq(getIntValue(cursorElement.style.left), isIE ? 99 : 98);
+        eq(getIntValue(cursorElement.style.top), isIE ? 348 : 347);
+    },
+
+    "10.Check event in iframe": inIFrame('#iframe1', function () {
         var expectedEvents = [];
 
         if (isIE) {
@@ -211,7 +235,7 @@ function bindHandlers () {
         events = [];
     }),
 
-    "9.Move from iframe": function () {
+    "11.Move from iframe": function () {
         var data = this;
 
         $('#iframe1').on('mouseout', function (e) {
@@ -227,7 +251,7 @@ function bindHandlers () {
         });
     },
 
-    "10.Check events in top document": function () {
+    "11.Check events in top document": function () {
         var expectedEvents = [];
 
         if (isIE) {
@@ -258,7 +282,14 @@ function bindHandlers () {
         eq(events, expectedEvents);
     },
 
-    "11.Check event in iframe": inIFrame('#iframe1', function () {
+    '12.Check cursor position': function () {
+        var cursorElement = getCursorUIElement();
+
+        eq(getIntValue(cursorElement.style.left), 18);
+        eq(getIntValue(cursorElement.style.top), 18);
+    },
+
+    "12.Check event in iframe": inIFrame('#iframe1', function () {
         var expectedEvents = [];
 
         if (isIE) {
