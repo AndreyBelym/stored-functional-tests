@@ -14,28 +14,30 @@ var brConnection = null;
 glob('./tests/**/*.js', function (err, files) {
     createTestCafe('localhost', 1339, 1340)
         .then(function (tc) {
-            testCafe     = tc;
-            brConnection = tc.createBrowserConnection();
-
+            testCafe = tc;
+            return tc.createBrowserConnection();
+        })
+        .then(function (bc) {
+            brConnection = bc;
             return testCafeBrowserNatives.getBrowserInfo('chrome');
         })
         .then(function (chromeInfo) {
             return testCafeBrowserNatives.open(chromeInfo, brConnection.url);
         })
-        .then(function () {
+        /*.then(function () {
             return testCafeBrowserNatives.resize(brConnection.idleUrl, 1000, 600);
-        })
+        })*/
         .then(function () {
             var runner = testCafe.createRunner();
 
             return runner
-                .reporter('json')
+                //.reporter('json')
                 .src(files)
                 .browsers(brConnection)
                 .filter(function (name, fixture) {
                     //return name === 'Move to the element in the scrolled container';
                     //return name === 'Move after an active iframe is removed';
-                    return fixture === 'move';
+                    return fixture === 'scroll';
                 })
                 .run();
         })
