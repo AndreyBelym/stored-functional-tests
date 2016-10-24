@@ -101,3 +101,12 @@ var clientHeight = document.documentElement.clientHeight;
         eq($(window).scrollTop(), 267);
     })
 };
+
+"@test"["Scroll to element when page doesn't have DOCTYPE"] = {
+    "0.": function () {
+        act.navigateTo('gh-883.html');
+    },
+    "1.": function () {
+        act.hover('#target');
+    }
+};
